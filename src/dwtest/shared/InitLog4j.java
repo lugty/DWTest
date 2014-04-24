@@ -25,6 +25,7 @@ public class InitLog4j extends HttpServlet {
 	public void init() throws ServletException {
 		String initPath = getInitParameter("logPath");
 		String logPath = "/WEB-INF/logs/errors.log"; 
+		
 		if(initPath!=null){
 			logPath = initPath;
 		}
