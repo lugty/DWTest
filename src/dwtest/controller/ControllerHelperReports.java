@@ -21,9 +21,11 @@ import dwtest.shared.ButtonMethod;
 import dwtest.shared.HelperBase;
 import dwtest.shared.HibernateHelper;
 import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
@@ -64,18 +66,19 @@ public class ControllerHelperReports extends HelperBase{
 		List personas= HibernateHelper.getListData(personaData.getClass());
 		
 		System.out.println("***************** Reporte " + personas.size());
-		
-		Map<String,Object> parameterMap = new HashMap<String,Object>();
-		
-		ServletContext sc = request.getServletContext();
-		File reportFile = new File(sc.getRealPath("/WEB-INF/classes/DWTestReport.jasper"));  
-		
-		JRDataSource JRdataSource = new JRBeanCollectionDataSource(personas);
-		parameterMap.put("datasorce", JRdataSource);
-		
 		try{
+		
+			Map<String,Object> parameterMap = new HashMap<String,Object>();
+			
+			ServletContext sc = request.getServletContext();
+			File reportFile = new File(sc.getRealPath("/WEB-INF/classes/DWTestReport.jrxml"));  
+			JasperReport reportJasper = JasperCompileManager.compileReport(reportFile.getAbsolutePath());
+			
+			JRDataSource JRdataSource = new JRBeanCollectionDataSource(personas);
+			parameterMap.put("datasorce", JRdataSource);
+		
 			//bytes = JasperRunManager.runReportToPdf(reportFile.getAbsolutePath(), parameterMap, JRdataSource);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(reportFile.getAbsolutePath(), parameterMap, JRdataSource);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(reportJasper, parameterMap, JRdataSource);
 			
 			response.addHeader("Content-disposition", "attachment; filename=report.pdf");
 			ServletOutputStream ouputStream = response.getOutputStream();
