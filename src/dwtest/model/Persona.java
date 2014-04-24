@@ -28,8 +28,6 @@ public class Persona {
 	private EstadoCivil cve_estado_civil;
 	private Domicilio cve_domicilio;
 	
-	private Alumno alumno;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getCve_persona() {
@@ -88,15 +86,5 @@ public class Persona {
 	public void setCve_domicilio(Domicilio cve_domicilio) {
 		this.cve_domicilio = cve_domicilio;
 	}
-
-	@OneToOne(mappedBy="cve_persona")
-	public Alumno getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
-	}
-	
 	
 }

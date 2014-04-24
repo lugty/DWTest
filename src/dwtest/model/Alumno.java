@@ -19,6 +19,7 @@ public class Alumno {
 	private String grado;
 	private String grupo;
 	private Persona cve_persona;
+	
 	private Universidad cve_universidad;
 	private AreaGradoAcademico cve_area_grado_academico;
 	
@@ -49,8 +50,8 @@ public class Alumno {
 		this.grupo = grupo;
 	}
 	
-	@OneToOne
-	@PrimaryKeyJoinColumn
+	@ManyToOne
+	@JoinColumn(name="CVE_PERSONA", referencedColumnName="CVE_PERSONA")
 	public Persona getCve_persona() {
 		return cve_persona;
 	}
