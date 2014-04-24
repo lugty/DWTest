@@ -59,9 +59,9 @@ public class ControllerHelperMain extends HelperBase{
 	
 	@ButtonMethod(buttonName="listAll", isDefault = true)
 	public String btnListAll(){
-		List cocinas= HibernateHelper.getListData(personaData.getClass());
-		request.setAttribute("personas", cocinas);
-		
+		List personas= HibernateHelper.getListData(personaData.getClass());
+		request.setAttribute("personas", personas);
+		System.out.println("*****************" + personas.size());
 		return jspLocation("listAll.jsp");
 	}
 	
@@ -72,20 +72,6 @@ public class ControllerHelperMain extends HelperBase{
 	}
 	
 	static public void initHibernate() {
-        Properties props = new Properties();
-        props.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-        props.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-        props.setProperty("hibernate.c3p0.min_size", "1");
-        props.setProperty("hibernate.c3p0.max_size", "5");
-        props.setProperty("hibernate.c3p0.timeout", "300");
-        props.setProperty("hibernate.c3p0.max_statements", "50");
-        props.setProperty("hibernate.c3p0.idle_test_period", "300");
-
-        //Se establesen los parametros de conexion a la base de datos
-        props.setProperty("hibernate.connection.url", "jdbc:mysql://127.0.0.1:3306/db_dwtest");
-        props.setProperty("hibernate.connection.username", "root");
-        props.setProperty("hibernate.connection.password", "root");
-
         HibernateHelper.initSessionFactory(Estado.class, Municipio.class, Domicilio.class, EstadoCivil.class, Persona.class);
     }
 }

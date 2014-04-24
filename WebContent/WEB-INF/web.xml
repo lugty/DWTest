@@ -10,24 +10,35 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-  	<servlet-name>MainController</servlet-name>
-  	<servlet-class>dwtest.controller.ControllerMain</servlet-class>
-  	<init-param>
-  		<param-name>create</param-name>
-  		<param-value>false</param-value>
-  	</init-param>
+    <servlet-name>MainController</servlet-name>
+    <servlet-class>dwtest.controller.ControllerMain</servlet-class>
+    <init-param>
+      <param-name>create</param-name>
+      <param-value>false</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <servlet-name>ReportController</servlet-name>
+    <servlet-class>dwtest.controller.ControllerReports</servlet-class>
+    <init-param>
+      <param-name>create</param-name>
+      <param-value>false</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>MainController</servlet-name>
-  	<url-pattern>/main</url-pattern>
+    <servlet-name>MainController</servlet-name>
+    <url-pattern>/main</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ReportController</servlet-name>
+    <url-pattern>/report</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>InitLog4j</servlet-name>
-  	<servlet-class>dwtest.shared.InitLog4j</servlet-class>
-  	<load-on-startup>1</load-on-startup>
+    <servlet-name>InitLog4j</servlet-name>
+    <servlet-class>dwtest.shared.InitLog4j</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
-  
   <listener>
-  	<listener-class>dwtest.shared.WebAppListener</listener-class>
+    <listener-class>dwtest.shared.WebAppListener</listener-class>
   </listener>
 </web-app>
