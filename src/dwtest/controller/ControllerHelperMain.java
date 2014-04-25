@@ -54,21 +54,57 @@ public class ControllerHelperMain extends HelperBase{
 	
 	/* espesicicar la ubicacion de los jsp */
 	protected String jspLocation(String page){
-		return "WEB-INF/classes/main/"+page;
+		return "resources/pages/main/"+page;
 	}
 	
 	@ButtonMethod(buttonName="listAll", isDefault = true)
 	public String btnListAll(){
 		List personas= HibernateHelper.getListData(personaData.getClass());
 		request.setAttribute("personas", personas);
-		System.out.println("*****************" + personas.size());
-		return jspLocation("listAll.jsp");
+		
+		return jspLocation("gestion_personas.jsp");
 	}
 	
-	@ButtonMethod(buttonName="confirmButton")
-	public String confirmButton(){
-		//fillBeanFromRequest(data);
-		return jspLocation("confirm.jsp");
+	@ButtonMethod(buttonName="btnDelete")
+	public String deleteButton(){
+		int idDelete = Integer.parseInt(request.getParameter("id"));
+		Persona personaBorrar = (Persona) HibernateHelper.getKeyData(Persona.class, idDelete);
+		if(personaBorrar!=null){
+			HibernateHelper.removeDB(personaBorrar);
+		}else{
+			logger.info("persona no encontrada");
+		}
+		
+		List personas = HibernateHelper.getListData(personaData.getClass());
+		request.setAttribute("personas", personas);
+		
+		return jspLocation("gestion_personas.jsp");
+	}
+	
+	@ButtonMethod (buttonName="btnInsert")
+	public String btnConfirm(){
+		
+		Domicilio dom = new Domicilio();
+		EstadoCivil edo= new EstadoCivil();
+		personaData.setCve_domicilio(dom);
+		personaData.setCve_estado_civil(edo);
+		
+		fillBeanFromRequest(personaData);
+		System.out.println(personaData.getCve_domicilio().getCalle());
+		
+		String address = "";
+		if(isValid(personaData)){
+			HibernateHelper.saveDB(edo);
+			HibernateHelper.saveDB(dom);
+			
+			HibernateHelper.saveDB(personaData);
+			address= jspLocation("gestion_personas.jsp");
+			response.setStatus(200);
+		}else{
+			response.setStatus(500);
+			address= jspLocation("gestion_personas.jsp");
+		}
+		return address;
 	}
 	
 	static public void initHibernate() {

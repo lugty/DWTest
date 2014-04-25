@@ -90,7 +90,11 @@ public abstract class HelperBase {
 				if(searchForDefault && annotation.isDefault())
 					methodDefault = method;
 				
+				System.out.println(annotation.buttonName());
+				System.out.println(request.getParameter(annotation.buttonName()));
+				
 				if(request.getParameter(annotation.buttonName()) != null){
+					System.out.println("****** entre ******");
 					result = invokeButtonMethod(method);
 					break;
 				}
@@ -116,12 +120,15 @@ public abstract class HelperBase {
 	protected String invokeButtonMethod(Method method)
 			throws IllegalAccessException, InvocationTargetException{
 		String resultInvoke = "No se pudo realizar la invocacion del metodo";
-		
+		System.out.println("********* llegue aqui");
 		try{
 			resultInvoke = (String) method.invoke(this, (Object[])null);
+			System.out.println("********* se ejecuto el metodo" + resultInvoke);
 		}catch(InvocationTargetException ie){
+			ie.printStackTrace();
 			logger.error("InvocationTargetException Error en invocacion del metodo", ie);
 		}catch (IllegalAccessException ile) {
+			ile.printStackTrace();
 			logger.error("IllegalAccessException Error en invocacion del metodo", ile);
 		}
 		

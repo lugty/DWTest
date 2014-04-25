@@ -287,7 +287,7 @@ public void closeFactory() {
   }
   
   static
-  public Object getKeyData(Class beanClass, long itemId)
+  public Object getKeyData(Class beanClass, int itemId)
   {
     Object data = null;
     Session session = sessionFactory.openSession();
