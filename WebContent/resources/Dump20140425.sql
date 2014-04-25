@@ -1,0 +1,499 @@
+CREATE DATABASE  IF NOT EXISTS `db_dwtest` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `db_dwtest`;
+-- MySQL dump 10.13  Distrib 5.5.35, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: db_dwtest
+-- ------------------------------------------------------
+-- Server version	5.5.35-0ubuntu0.13.10.2
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `ACTIVIDADES_MAESTROS`
+--
+
+DROP TABLE IF EXISTS `ACTIVIDADES_MAESTROS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ACTIVIDADES_MAESTROS` (
+  `CVE_ACTIVIDAD` int(11) NOT NULL AUTO_INCREMENT,
+  `CVE_UNIVERSIDAD` int(11) DEFAULT NULL,
+  `DESCRIPCION` varchar(200) DEFAULT NULL,
+  `ACTIVO` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`CVE_ACTIVIDAD`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ACTIVIDADES_MAESTROS`
+--
+
+LOCK TABLES `ACTIVIDADES_MAESTROS` WRITE;
+/*!40000 ALTER TABLE `ACTIVIDADES_MAESTROS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ACTIVIDADES_MAESTROS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ALUMNO`
+--
+
+DROP TABLE IF EXISTS `ALUMNO`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ALUMNO` (
+  `GRADO` char(1) DEFAULT NULL,
+  `GRUPO` varchar(10) DEFAULT NULL,
+  `CVE_ALUMNO` int(11) NOT NULL AUTO_INCREMENT,
+  `CVE_PERSONA` int(11) NOT NULL,
+  `CVE_UNIVERSIDAD` int(11) NOT NULL,
+  `CVE_AREA_GRADO_ACADEMICO` int(11) NOT NULL,
+  PRIMARY KEY (`CVE_ALUMNO`,`CVE_PERSONA`,`CVE_UNIVERSIDAD`,`CVE_AREA_GRADO_ACADEMICO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ALUMNO`
+--
+
+LOCK TABLES `ALUMNO` WRITE;
+/*!40000 ALTER TABLE `ALUMNO` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ALUMNO` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `AREA_GRADO_ACADEMICO`
+--
+
+DROP TABLE IF EXISTS `AREA_GRADO_ACADEMICO`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `AREA_GRADO_ACADEMICO` (
+  `CVE_AREA_GRADO_ACADEMICO` int(11) NOT NULL AUTO_INCREMENT,
+  `DESCRIPCION` varchar(60) DEFAULT NULL,
+  `ACTIVO` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`CVE_AREA_GRADO_ACADEMICO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `AREA_GRADO_ACADEMICO`
+--
+
+LOCK TABLES `AREA_GRADO_ACADEMICO` WRITE;
+/*!40000 ALTER TABLE `AREA_GRADO_ACADEMICO` DISABLE KEYS */;
+/*!40000 ALTER TABLE `AREA_GRADO_ACADEMICO` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CICLOS`
+--
+
+DROP TABLE IF EXISTS `CICLOS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CICLOS` (
+  `CVE_CICLO` int(11) NOT NULL,
+  `CICLO_ESCOLAR` varchar(45) NOT NULL,
+  `DESCRIPCION` varchar(300) NOT NULL,
+  PRIMARY KEY (`CVE_CICLO`),
+  UNIQUE KEY `CVE_CICLO_UNIQUE` (`CVE_CICLO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CICLOS`
+--
+
+LOCK TABLES `CICLOS` WRITE;
+/*!40000 ALTER TABLE `CICLOS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CICLOS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DOMICILIOS`
+--
+
+DROP TABLE IF EXISTS `DOMICILIOS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `DOMICILIOS` (
+  `CODIGO_POSTAL` varchar(5) DEFAULT NULL,
+  `CONSECUTIVO_CP` int(11) DEFAULT NULL,
+  `CALLE` varchar(150) DEFAULT NULL,
+  `NUMERO_EXTERIOR` varchar(10) DEFAULT NULL,
+  `NUMERO_INTERIOR` varchar(10) DEFAULT NULL,
+  `NUMERO_DEPTO` varchar(10) DEFAULT NULL,
+  `COMENTARIO` varchar(100) DEFAULT NULL,
+  `ACTIVO` varchar(40) DEFAULT NULL,
+  `CVE_MUNICIPIO` int(11) DEFAULT NULL,
+  `CVE_DOMICILIO` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`CVE_DOMICILIO`),
+  KEY `MUNICIPIO_DOMICILIOS` (`CVE_MUNICIPIO`),
+  CONSTRAINT `MUNICIPIO_DOMICILIOS` FOREIGN KEY (`CVE_MUNICIPIO`) REFERENCES `MUNICIPIO` (`CVE_MUNICIPIO`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DOMICILIOS`
+--
+
+LOCK TABLES `DOMICILIOS` WRITE;
+/*!40000 ALTER TABLE `DOMICILIOS` DISABLE KEYS */;
+INSERT INTO `DOMICILIOS` VALUES ('34500',34,'Av del 57','2180','0','1','Habitacion','1',0,0),('37700',0,'kjnkjnkjn',NULL,NULL,'25','lkmcmlkmk',NULL,NULL,1),('37700',0,'kklmlkmlkm',NULL,NULL,'25','klmlkmlkmkl',NULL,NULL,2),('37700',0,'kmlkm',NULL,NULL,'25','mc nkjsnkj',NULL,NULL,3),('37700',0,'llkl',NULL,NULL,'25','lknckjsdnckj',NULL,NULL,4),('37700',0,'kjnjkn',NULL,NULL,'20','mjnkjn',NULL,NULL,5),('37700',0,'kjnkjnkj',NULL,NULL,'25','ksncksncdskjcnkj',NULL,NULL,6);
+/*!40000 ALTER TABLE `DOMICILIOS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ESTADO`
+--
+
+DROP TABLE IF EXISTS `ESTADO`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ESTADO` (
+  `CVE_ESTADO` int(11) NOT NULL,
+  `ESTADO` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`CVE_ESTADO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ESTADO`
+--
+
+LOCK TABLES `ESTADO` WRITE;
+/*!40000 ALTER TABLE `ESTADO` DISABLE KEYS */;
+INSERT INTO `ESTADO` VALUES (0,'Queretaro');
+/*!40000 ALTER TABLE `ESTADO` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ESTADO_CIVIL`
+--
+
+DROP TABLE IF EXISTS `ESTADO_CIVIL`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ESTADO_CIVIL` (
+  `CVE_ESTADO_CIVIL` int(11) NOT NULL AUTO_INCREMENT,
+  `DESCRIPCION` varchar(40) DEFAULT NULL,
+  `ABREVIATURA` varchar(15) DEFAULT NULL,
+  `ACTIVO` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`CVE_ESTADO_CIVIL`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ESTADO_CIVIL`
+--
+
+LOCK TABLES `ESTADO_CIVIL` WRITE;
+/*!40000 ALTER TABLE `ESTADO_CIVIL` DISABLE KEYS */;
+INSERT INTO `ESTADO_CIVIL` VALUES (0,'Soltero','Soltero',1),(1,'-- Selecciona --',NULL,0),(2,'-- Selecciona --',NULL,0),(3,'-- Selecciona --',NULL,0),(4,'-- Selecciona --',NULL,0),(5,'-- Selecciona --',NULL,0),(6,'-- Selecciona --',NULL,0);
+/*!40000 ALTER TABLE `ESTADO_CIVIL` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `MUNICIPIO`
+--
+
+DROP TABLE IF EXISTS `MUNICIPIO`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `MUNICIPIO` (
+  `CVE_MUNICIPIO` int(11) NOT NULL,
+  `MUNICIPIO` varchar(50) DEFAULT NULL,
+  `CVE_ESTADO` int(11) DEFAULT NULL,
+  PRIMARY KEY (`CVE_MUNICIPIO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `MUNICIPIO`
+--
+
+LOCK TABLES `MUNICIPIO` WRITE;
+/*!40000 ALTER TABLE `MUNICIPIO` DISABLE KEYS */;
+INSERT INTO `MUNICIPIO` VALUES (0,'Santiago de Queretaro',0);
+/*!40000 ALTER TABLE `MUNICIPIO` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PADECIMIENTOS_PERSONA`
+--
+
+DROP TABLE IF EXISTS `PADECIMIENTOS_PERSONA`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `PADECIMIENTOS_PERSONA` (
+  `CVE_PADECIMIENTO` int(11) NOT NULL,
+  `NOTAS` varchar(300) DEFAULT NULL,
+  `CVE_PERSONA` int(11) NOT NULL,
+  `CVE_UNIVERSIDAD` int(11) NOT NULL,
+  PRIMARY KEY (`CVE_PADECIMIENTO`,`CVE_PERSONA`,`CVE_UNIVERSIDAD`),
+  KEY `PERSONA_PADECIMIENTOS_PERSONA` (`CVE_PERSONA`),
+  KEY `UNIVERSIDAD_PADECIMIENTOS_PERSONA` (`CVE_UNIVERSIDAD`),
+  CONSTRAINT `PERSONA_PADECIMIENTOS_PERSONA` FOREIGN KEY (`CVE_PERSONA`) REFERENCES `PERSONA` (`CVE_PERSONA`),
+  CONSTRAINT `UNIVERSIDAD_PADECIMIENTOS_PERSONA` FOREIGN KEY (`CVE_UNIVERSIDAD`) REFERENCES `UNIVERSIDAD` (`CVE_UNIVERSIDAD`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PADECIMIENTOS_PERSONA`
+--
+
+LOCK TABLES `PADECIMIENTOS_PERSONA` WRITE;
+/*!40000 ALTER TABLE `PADECIMIENTOS_PERSONA` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PADECIMIENTOS_PERSONA` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PARAMETROS`
+--
+
+DROP TABLE IF EXISTS `PARAMETROS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `PARAMETROS` (
+  `CVE_UNIVERSIDAD` int(11) NOT NULL,
+  `CVE_PERIODO` int(11) NOT NULL,
+  `CVE_PARAMETRO` varchar(20) NOT NULL,
+  `NOMBRE` varchar(300) DEFAULT NULL,
+  `DESCRIPCION` varchar(500) DEFAULT NULL,
+  `VALOR` int(11) DEFAULT NULL,
+  PRIMARY KEY (`CVE_UNIVERSIDAD`,`CVE_PERIODO`,`CVE_PARAMETRO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PARAMETROS`
+--
+
+LOCK TABLES `PARAMETROS` WRITE;
+/*!40000 ALTER TABLE `PARAMETROS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PARAMETROS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PERIODOS`
+--
+
+DROP TABLE IF EXISTS `PERIODOS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `PERIODOS` (
+  `CVE_PERIODOS` int(11) NOT NULL,
+  `CVE_UNIVERSIDAD` int(11) NOT NULL,
+  `CVE_CICLO` int(11) DEFAULT NULL,
+  `NUMERO_PERIODO` int(11) DEFAULT NULL,
+  `ANO` int(11) DEFAULT NULL,
+  `FECHA_INICIO` datetime DEFAULT NULL,
+  `FECHA_FIN` datetime DEFAULT NULL,
+  `ACTIVO` tinyint(1) DEFAULT NULL,
+  `CVE_PERSONA` int(11) NOT NULL,
+  `CVE_PADECIMIENTO` int(11) NOT NULL,
+  `CVE_ESTADO_CIVIL` int(11) NOT NULL,
+  PRIMARY KEY (`CVE_PERIODOS`,`CVE_UNIVERSIDAD`,`CVE_PERSONA`,`CVE_PADECIMIENTO`,`CVE_ESTADO_CIVIL`),
+  KEY `PADECIMIENTOS_PERSONA_PERIODOS` (`CVE_PADECIMIENTO`,`CVE_PERSONA`,`CVE_UNIVERSIDAD`),
+  KEY `PERSONA_PERIODOS` (`CVE_PERSONA`),
+  CONSTRAINT `PADECIMIENTOS_PERSONA_PERIODOS` FOREIGN KEY (`CVE_PADECIMIENTO`, `CVE_PERSONA`, `CVE_UNIVERSIDAD`) REFERENCES `PADECIMIENTOS_PERSONA` (`CVE_PADECIMIENTO`, `CVE_PERSONA`, `CVE_UNIVERSIDAD`),
+  CONSTRAINT `PERSONA_PERIODOS` FOREIGN KEY (`CVE_PERSONA`) REFERENCES `PERSONA` (`CVE_PERSONA`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PERIODOS`
+--
+
+LOCK TABLES `PERIODOS` WRITE;
+/*!40000 ALTER TABLE `PERIODOS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PERIODOS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PERSONA`
+--
+
+DROP TABLE IF EXISTS `PERSONA`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `PERSONA` (
+  `NOMBRE` varchar(50) DEFAULT NULL,
+  `APELLIDOS` varchar(100) DEFAULT NULL,
+  `EDAD` varchar(40) DEFAULT NULL,
+  `GENERO` varchar(10) DEFAULT NULL,
+  `FECHA_NACIMIENTO` date DEFAULT NULL,
+  `CVE_PERSONA` int(11) NOT NULL AUTO_INCREMENT,
+  `CVE_ESTADO_CIVIL` int(11) DEFAULT NULL,
+  `CVE_DOMICILIO` int(11) DEFAULT NULL,
+  PRIMARY KEY (`CVE_PERSONA`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PERSONA`
+--
+
+LOCK TABLES `PERSONA` WRITE;
+/*!40000 ALTER TABLE `PERSONA` DISABLE KEYS */;
+INSERT INTO `PERSONA` VALUES ('Jose Luis','Gutierrez','27','Masculino','2014-02-20',1,0,0),('kjjknkjnjkn','jknjknkjnjk','25','masculino','1987-02-20',3,1,1),('dkcnkjnjk','kjnjknkjn','30','masculino','2014-02-20',4,2,2),('effkjkjkjn','kjnkjnjk','20','femenino','2014-12-21',5,3,3),('wedwedewd','wdwedewdewd','25','femenino','2014-02-21',6,4,4),('kjjkjjkjk','kjhhhjkj','25','masculino','2014-12-12',7,5,5),('test','jhbhjbbh','25','femenino','2014-02-20',8,6,6);
+/*!40000 ALTER TABLE `PERSONA` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `RECIBOS_BANCOS`
+--
+
+DROP TABLE IF EXISTS `RECIBOS_BANCOS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `RECIBOS_BANCOS` (
+  `RECIBO` varchar(20) NOT NULL,
+  `SERIE` varchar(10) DEFAULT NULL,
+  `CVE_BANCO` varchar(10) DEFAULT NULL,
+  `NO_CUENTA` varchar(20) DEFAULT NULL,
+  `CVE_SUCURSAL` varchar(20) DEFAULT NULL,
+  `REFERENCIA_BANCARIA` varchar(20) DEFAULT NULL,
+  `FECHA_DEPOSITO` datetime DEFAULT NULL,
+  PRIMARY KEY (`RECIBO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `RECIBOS_BANCOS`
+--
+
+LOCK TABLES `RECIBOS_BANCOS` WRITE;
+/*!40000 ALTER TABLE `RECIBOS_BANCOS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `RECIBOS_BANCOS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `RESPUESTAS`
+--
+
+DROP TABLE IF EXISTS `RESPUESTAS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `RESPUESTAS` (
+  `CVE_UNIVERSIDAD` int(11) DEFAULT NULL,
+  `CVE_MATERIA` varchar(10) DEFAULT NULL,
+  `CVE_CONTENIDO` int(11) DEFAULT NULL,
+  `CVE_RESULTADO` int(11) DEFAULT NULL,
+  `CVE_PREGUNTA` int(11) DEFAULT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TEXT` varchar(1024) DEFAULT NULL,
+  `CORRECTA` tinyint(1) DEFAULT NULL,
+  `RUTA` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `RESPUESTAS`
+--
+
+LOCK TABLES `RESPUESTAS` WRITE;
+/*!40000 ALTER TABLE `RESPUESTAS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `RESPUESTAS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `SALDO_ALUMNO`
+--
+
+DROP TABLE IF EXISTS `SALDO_ALUMNO`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SALDO_ALUMNO` (
+  `CVE_ALUMNO` int(11) NOT NULL,
+  `CVE_UNIVERSIDAD` int(11) NOT NULL,
+  `SALDO` float(8,2) DEFAULT NULL,
+  `ADEUDO` float(8,2) DEFAULT NULL,
+  `CVE_SALDO` int(11) NOT NULL,
+  PRIMARY KEY (`CVE_SALDO`),
+  KEY `fk_SALDO_ALUMNO_1_idx` (`CVE_ALUMNO`),
+  KEY `fk_SALDO_ALUMNO_2_idx` (`CVE_UNIVERSIDAD`),
+  CONSTRAINT `fk_SALDO_ALUMNO_1` FOREIGN KEY (`CVE_ALUMNO`) REFERENCES `ALUMNO` (`CVE_ALUMNO`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_SALDO_ALUMNO_2` FOREIGN KEY (`CVE_UNIVERSIDAD`) REFERENCES `UNIVERSIDAD` (`CVE_UNIVERSIDAD`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SALDO_ALUMNO`
+--
+
+LOCK TABLES `SALDO_ALUMNO` WRITE;
+/*!40000 ALTER TABLE `SALDO_ALUMNO` DISABLE KEYS */;
+/*!40000 ALTER TABLE `SALDO_ALUMNO` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `UNIVERSIDAD`
+--
+
+DROP TABLE IF EXISTS `UNIVERSIDAD`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `UNIVERSIDAD` (
+  `NOMBRE` varchar(60) DEFAULT NULL,
+  `CVE_UNIVERSIDAD` int(11) NOT NULL AUTO_INCREMENT,
+  `CVE_DOMICILIO` int(11) DEFAULT NULL,
+  PRIMARY KEY (`CVE_UNIVERSIDAD`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `UNIVERSIDAD`
+--
+
+LOCK TABLES `UNIVERSIDAD` WRITE;
+/*!40000 ALTER TABLE `UNIVERSIDAD` DISABLE KEYS */;
+/*!40000 ALTER TABLE `UNIVERSIDAD` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `USUARIO`
+--
+
+DROP TABLE IF EXISTS `USUARIO`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `USUARIO` (
+  `CVE_USUARIO` int(11) NOT NULL,
+  `login` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  PRIMARY KEY (`CVE_USUARIO`),
+  UNIQUE KEY `login_UNIQUE` (`login`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `USUARIO`
+--
+
+LOCK TABLES `USUARIO` WRITE;
+/*!40000 ALTER TABLE `USUARIO` DISABLE KEYS */;
+INSERT INTO `USUARIO` VALUES (0,'admin','admin');
+/*!40000 ALTER TABLE `USUARIO` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2014-04-25 12:56:33
