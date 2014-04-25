@@ -8,11 +8,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dwtest.model.Alumno;
+import dwtest.model.AreaGradoAcademico;
+import dwtest.model.Ciclo;
 import dwtest.model.Domicilio;
 import dwtest.model.Estado;
 import dwtest.model.EstadoCivil;
 import dwtest.model.Municipio;
+import dwtest.model.PadecimientosPersona;
+import dwtest.model.Periodos;
 import dwtest.model.Persona;
+import dwtest.model.SaldoAlumno;
+import dwtest.model.Universidad;
+import dwtest.model.Usuario;
 import dwtest.shared.ButtonMethod;
 import dwtest.shared.HelperBase;
 import dwtest.shared.HibernateHelper;
@@ -21,12 +29,28 @@ public class ControllerHelperMain extends HelperBase{
 	//Se declara el data principal del controllerHelper
 	protected Persona personaData = new Persona();
 	
+	protected Municipio municipio = new Municipio();
+	protected Estado estado = new Estado();
+	protected EstadoCivil estadoCivil = new EstadoCivil();
+	protected Domicilio domicilio = new Domicilio();
+	protected Alumno alumno = new Alumno();
+	protected AreaGradoAcademico acaAreaGradoAcademico = new AreaGradoAcademico();
+	protected Ciclo ciclo = new Ciclo();
+	protected PadecimientosPersona padecimientosPersona = new PadecimientosPersona();
+	protected Periodos periodos = new Periodos();
+	protected SaldoAlumno saldoAlumno = new SaldoAlumno();
+	protected Universidad universidad = new Universidad();
+	
 	public ControllerHelperMain(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
 	}
 	
 	public Object getData(){
 		return personaData;
+	}
+	
+	public void setPersonaData(Persona persona){
+		this.personaData = persona;
 	}
 
 	@Override
@@ -36,6 +60,11 @@ public class ControllerHelperMain extends HelperBase{
         }
 	}
 
+	/**
+	 * Get default method
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void doGet()throws ServletException, IOException{
 		addHelperToSession("helper", SessionData.IGNORE);
 		
@@ -44,6 +73,11 @@ public class ControllerHelperMain extends HelperBase{
 		request.getRequestDispatcher(address).forward(request, response);
 	}
 	
+	/**
+	 * Post default method
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void doPost()throws ServletException, IOException{
 		addHelperToSession("helper", SessionData.READ);
 		
@@ -59,8 +93,28 @@ public class ControllerHelperMain extends HelperBase{
 	
 	@ButtonMethod(buttonName="listAll", isDefault = true)
 	public String btnListAll(){
-		List personas= HibernateHelper.getListData(personaData.getClass());
+		List personas = HibernateHelper.getListData(personaData.getClass());
+		List estaList = HibernateHelper.getListData(estadoCivil.getClass());
+		List universidades = HibernateHelper.getListData(universidad.getClass());
+		List estados = HibernateHelper.getListData(estado.getClass());
+		List municipios = HibernateHelper.getListData(municipio.getClass());
+		List grados = HibernateHelper.getListData(acaAreaGradoAcademico.getClass());
+		List ciclos = HibernateHelper.getListData(ciclo.getClass());
 		request.setAttribute("personas", personas);
+		request.setAttribute("estados_civil", estaList);
+		request.setAttribute("universidades", universidades);
+		request.setAttribute("estados", estados);
+		request.setAttribute("grados", grados);
+		request.setAttribute("municipios", municipios);
+		request.setAttribute("ciclos", ciclos);
+		
+		System.out.println(" ******* Personas: " + personas.size());
+		System.out.println(" ******* Estados Civiles: " + estaList.size());
+		System.out.println(" ******* Universidades: " + universidades.size());
+		System.out.println(" ******* Etados: " + estados.size());
+		System.out.println(" ******* Municipios: " + municipios.size());
+		System.out.println(" ******* Grados: " + grados.size());
+		System.out.println(" ******* Ciclos: " + ciclos.size());
 		
 		return jspLocation("gestion_personas.jsp");
 	}
@@ -107,6 +161,9 @@ public class ControllerHelperMain extends HelperBase{
 		return address;
 	}
 	
+	/**
+	 * Iniciar session factory, las configuraciones de conexion a la base de datos se cargan desde el archivo 
+	 */
 	static public void initHibernate() {
         HibernateHelper.initSessionFactory(Estado.class, Municipio.class, Domicilio.class, EstadoCivil.class, Persona.class);
     }

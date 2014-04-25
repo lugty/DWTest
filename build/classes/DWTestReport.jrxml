@@ -3,6 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<style name="table" mode="Transparent" forecolor="#808080"/>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="apellidos" class="java.lang.String"/>
 	<field name="edad" class="java.lang.String"/>
@@ -11,27 +12,76 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="2" width="263" height="33" forecolor="#736C6C" uuid="766ee81b-7bb1-4218-96e7-ab400974590a"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[:: Reporte de Personal ::]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="389" y="8" width="166" height="15" forecolor="#8F8D8D" uuid="22d906f8-802a-4d20-8ae9-c8f6c53610b8"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="303" y="23" width="251" height="27" forecolor="#8F8D8D" uuid="b5de6753-64be-40fb-a622-d04ad44114e2"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Listado de personal enlistado dentro del sistema,
+INFORMACION DE CARACTER CONFIDENCIAL]]></text>
+			</staticText>
+		</band>
 	</title>
 	<pageHeader>
 		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="138" height="20" uuid="d675e6fe-117f-4b8b-8099-cff9c3b0fca2"/>
+				<reportElement style="table" x="0" y="0" width="138" height="20" forecolor="#747272" uuid="d675e6fe-117f-4b8b-8099-cff9c3b0fca2"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.5" lineColor="#474545"/>
+					<bottomPen lineWidth="1.5" lineStyle="Solid" lineColor="#474545"/>
+				</box>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
 				<text><![CDATA[nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="138" y="0" width="138" height="20" uuid="63023b21-d91c-405c-9709-7c0f809c176a"/>
+				<reportElement style="table" x="138" y="0" width="138" height="20" forecolor="#747272" uuid="63023b21-d91c-405c-9709-7c0f809c176a"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.5" lineColor="#474545"/>
+					<bottomPen lineWidth="1.5" lineStyle="Solid" lineColor="#474545"/>
+				</box>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
 				<text><![CDATA[apellidos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="276" y="0" width="138" height="20" uuid="0cdb8bb6-2a69-4841-95bb-faabb17b2f8d"/>
+				<reportElement style="table" x="276" y="0" width="138" height="20" forecolor="#747272" uuid="0cdb8bb6-2a69-4841-95bb-faabb17b2f8d"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.5" lineColor="#474545"/>
+					<bottomPen lineWidth="1.5" lineStyle="Solid" lineColor="#474545"/>
+				</box>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
 				<text><![CDATA[edad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="414" y="0" width="138" height="20" uuid="b31175c6-2d07-4f5b-8c32-4a3ff6283bcd"/>
+				<reportElement style="table" x="414" y="0" width="138" height="20" forecolor="#747272" uuid="b31175c6-2d07-4f5b-8c32-4a3ff6283bcd"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.5" lineColor="#474545"/>
+					<bottomPen lineWidth="1.5" lineStyle="Solid" lineColor="#474545"/>
+				</box>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
 				<text><![CDATA[genero]]></text>
 			</staticText>
 		</band>
@@ -39,19 +89,31 @@
 	<detail>
 		<band height="125" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="138" height="20" uuid="f6bcdf3c-3d07-4668-860b-676d79172138"/>
+				<reportElement x="0" y="0" width="138" height="20" forecolor="#767171" uuid="f6bcdf3c-3d07-4668-860b-676d79172138"/>
+				<box topPadding="2" leftPadding="5">
+					<bottomPen lineWidth="0.25" lineColor="#A7A2A2"/>
+				</box>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="138" y="0" width="138" height="20" uuid="3e39e71f-6ceb-4cfe-b28a-cdf6dc8b6eeb"/>
+				<reportElement x="138" y="0" width="138" height="20" forecolor="#767171" uuid="3e39e71f-6ceb-4cfe-b28a-cdf6dc8b6eeb"/>
+				<box topPadding="2" leftPadding="5">
+					<bottomPen lineWidth="0.25" lineColor="#A7A2A2"/>
+				</box>
 				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="276" y="0" width="138" height="20" uuid="9bbb27e4-8e51-4593-86a8-d90af7355d3d"/>
+				<reportElement x="274" y="0" width="138" height="20" forecolor="#767171" uuid="9bbb27e4-8e51-4593-86a8-d90af7355d3d"/>
+				<box topPadding="2" leftPadding="5">
+					<bottomPen lineWidth="0.25" lineColor="#A7A2A2"/>
+				</box>
 				<textFieldExpression><![CDATA[$F{edad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="414" y="0" width="138" height="20" uuid="24a0d4e9-e650-41f1-b315-8b8f48456d77"/>
+				<reportElement x="414" y="0" width="138" height="20" forecolor="#767171" uuid="24a0d4e9-e650-41f1-b315-8b8f48456d77"/>
+				<box topPadding="2" leftPadding="5">
+					<bottomPen lineWidth="0.25" lineColor="#A7A2A2"/>
+				</box>
 				<textFieldExpression><![CDATA[$F{genero}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -60,7 +122,12 @@
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="34" width="451" height="20" forecolor="#857E7E" uuid="7fa411c3-ee6b-4597-a0b3-f8db8495c2bb"/>
+				<text><![CDATA[Esta es una version en PDF del listado de personas en el sistema]]></text>
+			</staticText>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>

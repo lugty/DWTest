@@ -13,9 +13,12 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="/DWTest/resources/css/bootstrap.css" rel="stylesheet">
 <link href="/DWTest/resources/css/bootstrapValidator.css" rel="stylesheet">
+<link href="/DWTest/resources/css/jquery-ui.css" rel="stylesheet">
+
 <script src="/DWTest/resources/js/jquery.js"></script>
 <script src="/DWTest/resources/js/bootstrap.js"></script>
 <script src="/DWTest/resources/js/bootstrapValidator.js"></script>
+<script type="text/javascript" src="/DWTest/resources/js/jquery-ui.js"></script>
 <script type="text/javascript">
 	/** Esperamos que se termine de cargar los elementos de la pagina para poder
 	trabajar con ellos y asignarles eventos correspondientes. */
@@ -37,7 +40,8 @@
 					data : datos,
 					success : function(response, xhm) {
 						console.log(response);
-						console.log(xhm);
+						if(xhm == 'success')
+							location.reload();
 					},
 					beforeSend : function() {
 					
@@ -53,44 +57,103 @@
 		$("#btnAgregar").on('click', function() {
 			$("#crearAlumno").modal();
 		});
-		/** Se asgina el evento de Autocompletar. */
-		$("#univeridad").on('keypress', function() {
-			$.ajax({
-				url : "",
-				type : "POST",
-				data : datos,
-				success : function(response, xhm) {
-					
-				},
-				beforeSend : function() {
-					
-				},
-				error : function() {
-			
-				}
-			});
-		});
-		$("#grado").on('keypress', function() {
-			$.ajax({
-				url : "",
-				type : "POST",
-				data : datos,
-				success : function() {
-
-				},
-				beforeSend : function() {
-
-				},
-				error : function() {
-
-				}
-			});
-		});
 	});
+	
+	var cargarEventos = function () {
+		/** Valores que se mostraran en el autocompletar. */
+		var universidades = [
+			{
+				value : 1,
+				label : "Universidad del Norte de Guanajuato."
+			 },
+			<c:forEach items="${universiades}" var="universidad">
+			 {
+				value : ${universidad.cve_universidad},
+				label : ${universidad.nombre}
+			 },
+			</c:forEach>
+		 ];
+		$( "#auto_complete_universidad" ).autocomplete({
+		      minLength: 0,
+		      source: universidades,
+		      focus: function( event, ui ) {
+		        $( "#auto_complete_universidad" ).val( ui.item.label );
+		        return false;
+		      },
+		      select: function( event, ui ) {
+		        $( "#auto_complete_universidad" ).val( ui.item.label );
+		        $( "#uniiversidad" ).val( ui.item.value );		 
+		        return false;
+		      }
+		    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+		        return $( "<li>" )
+		          .append( "<a>" + item.label + "</a>" )
+		          .appendTo( ul );
+		      };
+		var grados = [
+				{
+					value : 1,
+					label : "Sistemas Informaticos."
+				 },
+       			<c:forEach items="${grados}" var="grado">
+       			 {
+       				value : ${grado.cve_area_grado_academico},
+       				label : ${grado.descripcion}
+       			 },
+       			</c:forEach>
+       		 ];
+       		$( "#auto_complete_grado" ).autocomplete({
+       		      minLength: 0,
+       		      source: grados,
+       		      focus: function( event, ui ) {
+       		        $( "#auto_complete_grado" ).val( ui.item.label );
+       		        return false;
+       		      },
+       		      select: function( event, ui ) {
+       		        $( "#auto_complete_grado" ).val( ui.item.label );
+       		        $( "#grado" ).val( ui.item.value );		 
+       		        return false;
+       		      }
+       		    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+       	      return $( "<li>" )
+       	        .append( "<a>" + item.label + "</a>" )
+       	        .appendTo( ul );
+       	    };
+       	    
+       	 var ciclos = [
+       				{
+       					value : 1,
+       					label : "2007-2011"
+       				 },
+              			<c:forEach items="${ciclos}" var="ciclo">
+              			 {
+              				value : ${ciclo.cve_ciclo},
+              				label : ${ciclo.ciclo_escolar}
+              			 },
+              			</c:forEach>
+              		 ];
+              		$( "#auto_complete_ciclo" ).autocomplete({
+              		      minLength: 0,
+              		      source: ciclos,
+              		      focus: function( event, ui ) {
+              		        $( "#auto_complete_ciclo" ).val( ui.item.label );
+              		        return false;
+              		      },
+              		      select: function( event, ui ) {
+              		        $( "#auto_complete_ciclo" ).val( ui.item.label );
+              		        $( "#ciclo" ).val( ui.item.value );		 
+              		        return false;
+              		      }
+              		    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+              	      return $( "<li>" )
+              	        .append( "<a>" + item.label + "</a>" )
+              	        .appendTo( ul );
+              	    };
+	};
 </script>
 <title>Gestionar alumnos</title>
 </head>
-<body>
+<body onload="cargarEventos()">
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -113,7 +176,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="#"></a></li>
 						<li><a href="#">Historial academico.</a></li>
-						<li><a href="documentos.html">Documentos.</a></li>
+						<li><a href="#">Documentos.</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -126,10 +189,8 @@
 						<span id="nom_usuario"></span><b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="perfil.html">Perfil</a></li>
-						<li><a href="acercade.html">Acerca de</a></li>
 						<li class="divider"></li>
-						<li><a href="/core/controller/controller_usuarios.php">Salir</a></li>
+						<li><a href="/DWTest">Salir</a></li>
 					</ul></li>
 			</ul>
 		</div>
@@ -240,6 +301,9 @@
 											data-bv-notempty="true"
 											data-bv-notempty-message="Seleccione el estado civil.">
 											<option>-- Selecciona --</option>
+											<c:forEach items="${estados_civil}" var="estado_civil">
+												<option value="${estado_civil.cve_estado_civil}">${estado_civil.abreviatura }</option>
+											</c:forEach>
 										</select>
 									</div>
 									<div class="radio">
@@ -313,12 +377,18 @@
 									<label for="estado">Estado</label> <select id="estado"
 										name="activi" class="form-control">
 										<option>-- Selecciona --</option>
+										<c:forEach items="${estados}" var="estado">
+											<option value="${estado.cve_estado}">${estado.estado }</option>
+										</c:forEach>
 									</select>
 								</div>
 								<div class="form-group">
 									<label for="municipio">Municipio</label> <select id="municipio"
 										name="municipio" class="form-control">
 										<option>-- Selecciona --</option>
+										<c:forEach items="${municipios}" var="municipio">
+											<option value="${municipio.cve_municipio}">${municipio.municipio }</option>
+										</c:forEach>
 									</select>
 								</div>
 								<fieldset>

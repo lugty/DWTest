@@ -59,14 +59,14 @@ body {
 <body>
 	<div class="container">
 
-      <form class="form-signin" role="form">
+      <form class="form-signin" role="form" action="login" method="POST">
         <h2 class="form-signin-heading">Iniciar sesion</h2>
-        <input type="text" class="form-control" placeholder="Nombre de usuario" required="" autofocus="">
-        <input type="password" class="form-control" placeholder="Contrase&ntilde;a" required="">
+        <input name="username" type="text" class="form-control" placeholder="Nombre de usuario" required="" autofocus="">
+        <input name="password" type="password" class="form-control" placeholder="Contrase&ntilde;a" required="">
         <label class="checkbox">
           <input type="checkbox" value="remember-me"> Recordarme
         </label>
-        <a class="btn btn-lg btn-primary btn-block" href="resources/pages/gestion_alumnos.jsp">Entrar</a>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" >Entrar</button>
       </form>
 
     </div>

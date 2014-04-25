@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -357,4 +359,36 @@ public void closeFactory() {
         "Hibernate Initialization Error",
         lastError);
   }
+  
+  public static Object getFirstMatch(Class classBean, String strKey1, Object value1, 
+			String strKey2, Object value2 ){
+		
+		Object result= null;
+		
+		Session session = null;
+		
+		try {
+			session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Criteria criteria = session.createCriteria(classBean);
+			if(strKey1!=null){
+				criteria.add(Restrictions.like(strKey1, value1));
+			}
+			if(strKey2!=null){
+				criteria.add(Restrictions.like(strKey2, value2));
+			}
+			criteria.setMaxResults(1);
+			result = criteria.uniqueResult();
+			
+			transaction.commit();
+		} finally {
+			if(session!=null){
+				session.close();
+			}
+		}
+		
+		return result;
+		
+		
+	}
 }
