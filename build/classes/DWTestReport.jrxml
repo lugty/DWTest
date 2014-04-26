@@ -87,7 +87,7 @@ INFORMACION DE CARACTER CONFIDENCIAL]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="138" height="20" forecolor="#767171" uuid="f6bcdf3c-3d07-4668-860b-676d79172138"/>
 				<box topPadding="2" leftPadding="5">
