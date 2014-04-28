@@ -1,6 +1,7 @@
 package dwtest.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +43,6 @@ public class ControllerHelperUsuario extends HelperBase{
 		addHelperToSession("helper", SessionData.IGNORE);
 		String address = executeButtonMethod();
 		
-		
 		request.getRequestDispatcher(address).forward(request, response);
 	}
 	
@@ -56,28 +56,76 @@ public class ControllerHelperUsuario extends HelperBase{
 		
 		String address = executeButtonMethod();
 		
-		if(address.equals("redirecMain"))
+		if(address.equals("successLogin"))
 			response.sendRedirect("main");
 		else
 			request.getRequestDispatcher(address).forward(request, response);
 	}
 	
 	/* acciones principales del servlet */
-	@ButtonMethod(isDefault=true)
+	@ButtonMethod(buttonName="login")
 	public String doLogin(){
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
+		System.out.println(username);
+		System.out.println(password);
+		
 		if(username!=null && password!=null){
 			Object user = HibernateHelper.getFirstMatch(usuarioData.getClass(), "login", username,"password", password);
+			System.out.println(user);
 			if(user != null){
 				usuarioData = (Usuario) user;
-				return "redirecMain";
+				return "successLogin";
 			}else{
-				return "";
+				return "/";
 			}
 		}
 		return "";
+	}
+	
+	@ButtonMethod(buttonName="listAllUsers", isDefault=true)
+	public String listAllUsers(){
+		List usuarios = HibernateHelper.getListData(Usuario.class);
+		request.setAttribute("usuarios", usuarios);
+		return jspLocation("gestion_usuarios.jsp");
+	}
+	
+	@ButtonMethod(buttonName="btnDelete")
+	public String deleteButton(){
+		int idDelete = Integer.parseInt(request.getParameter("id"));
+		Usuario usuarioBorrar = (Usuario) HibernateHelper.getKeyData(Usuario.class, idDelete);
+		if(usuarioBorrar!=null){
+			HibernateHelper.removeDB(usuarioBorrar);
+		}else{
+			logger.info("Usuario no encontrado");
+		}
+		
+		List usuarios = HibernateHelper.getListData(usuarioData.getClass());
+		request.setAttribute("usuarios", usuarios);
+		
+		return jspLocation("gestion_usuarios.jsp");
+	}
+	
+	@ButtonMethod (buttonName="btnInsert")
+	public String btnConfirm(){
+		fillBeanFromRequest(usuarioData);
+		
+		String address = "";
+		if(isValid(usuarioData)){
+			HibernateHelper.saveDB(usuarioData);
+			address= jspLocation("gestion_usuarios.jsp");
+			response.setStatus(200);
+		}else{
+			response.setStatus(500);
+			address= jspLocation("gestion_usuarios.jsp");
+		}
+		return address;
+	}
+	
+	/* espesicicar la ubicacion de los jsp */
+	protected String jspLocation(String page){
+		return "resources/pages/main/"+page;
 	}
 	
 	/**

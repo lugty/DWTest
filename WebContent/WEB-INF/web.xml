@@ -43,7 +43,7 @@
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>userController</servlet-name>
-  	<url-pattern>/login</url-pattern>
+  	<url-pattern>/users</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>InitLog4j</servlet-name>

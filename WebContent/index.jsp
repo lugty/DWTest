@@ -59,14 +59,14 @@ body {
 <body>
 	<div class="container">
 
-      <form class="form-signin" role="form" action="login" method="POST">
+      <form class="form-signin" role="form" action="users" method="POST">
         <h2 class="form-signin-heading">Iniciar sesion</h2>
         <input name="username" type="text" class="form-control" placeholder="Nombre de usuario" required="" autofocus="">
         <input name="password" type="password" class="form-control" placeholder="Contrase&ntilde;a" required="">
         <label class="checkbox">
           <input type="checkbox" value="remember-me"> Recordarme
         </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" >Entrar</button>
+        <input class="btn btn-lg btn-primary btn-block" type="submit" name="login" value="login"/>
       </form>
 
     </div>
