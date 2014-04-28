@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name="AREA_GRADO_ACADEMICO")
 public class AreaGradoAcademico {
 	private int cve_area_grado_academico;
-	private String description;
+	private String descripcion;
 	private boolean activo;
 	
 	@Id
@@ -25,12 +25,12 @@ public class AreaGradoAcademico {
 		this.cve_area_grado_academico = cve_area_grado_academico;
 	}
 	
-	public String getDescription() {
-		return description;
+	public String getDescripcion() {
+		return descripcion;
 	}
 	
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	
 	public boolean isActivo() {
