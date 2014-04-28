@@ -2,7 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:layout title="Gestionar Personal">
+<t:layout title="Gestionar Usuarios">
 	<jsp:attribute name="head_area">
 		<script type="text/javascript">
 			/** Esperamos que se termine de cargar los elementos de la pagina para poder
@@ -52,7 +52,7 @@
 				<span class="glyphicon glyphicon-plus"></span> Agregar
 			</button>
 			<form action="report" method="post" style="text-align: right;">
-				<input class="btn btn-default" type="submit" name="btnPersonas" value="Reporte"/>
+				<input class="btn btn-default" type="submit" name="listUsuarios" value="Reporte"/>
 			</form>
 			<table class="table">
 				<thead>

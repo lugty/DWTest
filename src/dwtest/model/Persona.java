@@ -2,6 +2,7 @@ package dwtest.model;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -69,7 +70,7 @@ public class Persona {
 		this.fecha_nacimiento = fecha_nacimiento;
 	}
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="CVE_ESTADO_CIVIL", referencedColumnName= "CVE_ESTADO_CIVIL")
 	public EstadoCivil getCve_estado_civil() {
 		return cve_estado_civil;
@@ -78,7 +79,7 @@ public class Persona {
 		this.cve_estado_civil = cve_estado_civil;
 	}
 	
-	@ManyToOne
+	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumn(name="CVE_DOMICILIO", referencedColumnName = "CVE_DOMICILIO")
 	public Domicilio getCve_domicilio() {
 		return cve_domicilio;

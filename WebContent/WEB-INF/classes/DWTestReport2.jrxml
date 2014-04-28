@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DWTestReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="819ec1a7-a2a7-4776-9489-dc21e5201285">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table" mode="Transparent" forecolor="#808080"/>
+	<field name="cve_usuario" class="java.lang.Integer"/>
+	<field name="login" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="2" width="263" height="33" forecolor="#736C6C" uuid="766ee81b-7bb1-4218-96e7-ab400974590a"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[:: Reporte de Usuarios ::]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="389" y="8" width="166" height="15" forecolor="#8F8D8D" uuid="22d906f8-802a-4d20-8ae9-c8f6c53610b8"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="303" y="23" width="251" height="27" forecolor="#8F8D8D" uuid="b5de6753-64be-40fb-a622-d04ad44114e2"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Listado de usuarios enlistado dentro del sistema,
+INFORMACION DE CARACTER CONFIDENCIAL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement style="table" x="0" y="0" width="138" height="20" forecolor="#747272" uuid="d675e6fe-117f-4b8b-8099-cff9c3b0fca2"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.5" lineColor="#474545"/>
+					<bottomPen lineWidth="1.5" lineStyle="Solid" lineColor="#474545"/>
+				</box>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clave de Usuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table" x="138" y="0" width="416" height="20" forecolor="#747272" uuid="63023b21-d91c-405c-9709-7c0f809c176a"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.5" lineColor="#474545"/>
+					<bottomPen lineWidth="1.5" lineStyle="Solid" lineColor="#474545"/>
+				</box>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de Usuario]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="138" height="20" forecolor="#767171" uuid="f6bcdf3c-3d07-4668-860b-676d79172138"/>
+				<box topPadding="2" leftPadding="5">
+					<bottomPen lineWidth="0.25" lineColor="#A7A2A2"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{cve_usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="0" width="416" height="20" forecolor="#767171" uuid="3e39e71f-6ceb-4cfe-b28a-cdf6dc8b6eeb"/>
+				<box topPadding="2" leftPadding="5">
+					<bottomPen lineWidth="0.25" lineColor="#A7A2A2"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{login}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="34" width="451" height="20" forecolor="#857E7E" uuid="7fa411c3-ee6b-4597-a0b3-f8db8495c2bb"/>
+				<text><![CDATA[Esta es una version en PDF del listado de usuarios en el sistema]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

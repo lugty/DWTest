@@ -1,5 +1,6 @@
 package dwtest.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class Municipio {
 		this.municipio = municipio;
 	}
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="CVE_ESTADO", referencedColumnName = "CVE_ESTADO")
 	public Estado getEstado() {
 		return estado;

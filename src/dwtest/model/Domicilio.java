@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import javax.persistence.CascadeType;
+
 @Entity
 @Table(name="DOMICILIOS")
 public class Domicilio {
@@ -101,7 +103,7 @@ public class Domicilio {
 		this.activo = activo;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="CVE_MUNICIPIO", referencedColumnName = "CVE_MUNICIPIO")
 	public Municipio getCve_municipio() {
 		return cve_municipio;

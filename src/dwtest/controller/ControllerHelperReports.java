@@ -17,6 +17,8 @@ import dwtest.model.Estado;
 import dwtest.model.EstadoCivil;
 import dwtest.model.Municipio;
 import dwtest.model.Persona;
+import dwtest.model.Universidad;
+import dwtest.model.Usuario;
 import dwtest.shared.ButtonMethod;
 import dwtest.shared.HelperBase;
 import dwtest.shared.HibernateHelper;
@@ -40,7 +42,7 @@ public class ControllerHelperReports extends HelperBase{
 	@Override
 	protected void copyFromSession(Object helper) {
 		if (helper.getClass() == this.getClass()) {
-            personaData = ((ControllerHelperMain) helper).personaData;
+            personaData = ((ControllerHelperReports) helper).personaData;
         }
 	}
 	
@@ -60,7 +62,7 @@ public class ControllerHelperReports extends HelperBase{
 		request.getRequestDispatcher(address).forward(request, response);
 	}
 	
-	@ButtonMethod(buttonName="listAll", isDefault = true)
+	@ButtonMethod(buttonName="listPersonas", isDefault = true)
 	public String btnListAll(){
 		
 		List personas= HibernateHelper.getListData(personaData.getClass());
@@ -80,7 +82,71 @@ public class ControllerHelperReports extends HelperBase{
 			//bytes = JasperRunManager.runReportToPdf(reportFile.getAbsolutePath(), parameterMap, JRdataSource);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reportJasper, parameterMap, JRdataSource);
 			
-			response.addHeader("Content-disposition", "attachment; filename=report.pdf");
+			response.addHeader("Content-disposition", "attachment; filename=reportPersonas.pdf");
+			ServletOutputStream ouputStream = response.getOutputStream();
+			JasperExportManager.exportReportToPdfStream(jasperPrint, ouputStream);
+			
+		}catch(Exception e){
+			e.printStackTrace();  
+            return null;
+		}
+		
+		return "listAll.jsp";
+	}
+	
+	@ButtonMethod(buttonName="listUsuarios")
+	public String btnListAllUsuarios(){
+		
+		List usuarios= HibernateHelper.getListData(Usuario.class);
+		
+		System.out.println("usuarios size ********" + usuarios.size());
+		try{
+		
+			Map<String,Object> parameterMap = new HashMap<String,Object>();
+			
+			ServletContext sc = request.getServletContext();
+			File reportFile = new File(sc.getRealPath("/WEB-INF/classes/DWTestReport2.jrxml"));  
+			JasperReport reportJasper = JasperCompileManager.compileReport(reportFile.getAbsolutePath());
+			
+			JRDataSource JRdataSource = new JRBeanCollectionDataSource(usuarios);
+			parameterMap.put("datasorce", JRdataSource);
+		
+			//bytes = JasperRunManager.runReportToPdf(reportFile.getAbsolutePath(), parameterMap, JRdataSource);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(reportJasper, parameterMap, JRdataSource);
+			
+			response.addHeader("Content-disposition", "attachment; filename=reportUsuarios.pdf");
+			ServletOutputStream ouputStream = response.getOutputStream();
+			JasperExportManager.exportReportToPdfStream(jasperPrint, ouputStream);
+			
+		}catch(Exception e){
+			e.printStackTrace();  
+            return null;
+		}
+		
+		return "listAll.jsp";
+	}
+	
+	@ButtonMethod(buttonName="listUniversidades")
+	public String btnListAllUniversidades(){
+		
+		List universidades = HibernateHelper.getListData(Universidad.class);
+		
+		System.out.println("universidades size ********" + universidades.size());
+		try{
+		
+			Map<String,Object> parameterMap = new HashMap<String,Object>();
+			
+			ServletContext sc = request.getServletContext();
+			File reportFile = new File(sc.getRealPath("/WEB-INF/classes/DWTestReport3.jrxml"));  
+			JasperReport reportJasper = JasperCompileManager.compileReport(reportFile.getAbsolutePath());
+			
+			JRDataSource JRdataSource = new JRBeanCollectionDataSource(universidades);
+			parameterMap.put("datasorce", JRdataSource);
+		
+			//bytes = JasperRunManager.runReportToPdf(reportFile.getAbsolutePath(), parameterMap, JRdataSource);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(reportJasper, parameterMap, JRdataSource);
+			
+			response.addHeader("Content-disposition", "attachment; filename=reportUniversidades.pdf");
 			ServletOutputStream ouputStream = response.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint, ouputStream);
 			
@@ -93,7 +159,7 @@ public class ControllerHelperReports extends HelperBase{
 	}
 	
 	static public void initHibernate() {
-        HibernateHelper.initSessionFactory(Estado.class, Municipio.class, Domicilio.class, EstadoCivil.class, Persona.class);
+        HibernateHelper.initSessionFactory(Estado.class, Municipio.class, Domicilio.class, EstadoCivil.class, Persona.class, Universidad.class, Usuario.class);
     }
 	
 }
